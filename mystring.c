@@ -105,8 +105,7 @@ char * mystrchr(char * str,char ch)//查询字串
 char * mystrstr(char * fstr,char * sstr)//查询子串
 {	int num=0,cnum=0;
 	char * pfstr = fstr, * psstr = sstr;
-	while(*pfstr != '\0'){
-		pfstr += num;
+	while(*(pfstr+=num) != '\0'){
 		while(*pfstr == * psstr){
 			pfstr++;
 			psstr++;
@@ -114,8 +113,10 @@ char * mystrstr(char * fstr,char * sstr)//查询子串
 			if(*psstr == '\0')
 				return pfstr-cnum;
 		}
-		num++;
+		if(num++ > mystrlen(fstr)-mystrlen(sstr))
+			break;
 		cnum=0;
+		pfstr = fstr;
 		psstr = sstr;
 	}
 	return NULL;
